@@ -1,4 +1,4 @@
-// Copyright (c) 2006, Google Inc.
+// Copyright (c) 2023, Google Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -60,26 +60,8 @@
 
 #ifdef HAVE_SYMBOLIZE
 
-#  if defined(__ELF__)  // defined by gcc
-#    if defined(__OpenBSD__)
-#      include <sys/exec_elf.h>
-#    else
-#      include <elf.h>
-#    endif
-
-#    if !defined(ANDROID)
-#      include <link.h>  // For ElfW() macro.
-#    endif
-
-// For systems where SIZEOF_VOID_P is not defined, determine it
-// based on __LP64__ (defined by gcc on 64-bit systems)
-#    if !defined(SIZEOF_VOID_P)
-#      if defined(__LP64__)
-#        define SIZEOF_VOID_P 8
-#      else
-#        define SIZEOF_VOID_P 4
-#      endif
-#    endif
+#  if defined(HAVE_LINK_H)
+#    include <link.h>  // For ElfW() macro.
 
 // If there is no ElfW macro, let's define it by ourself.
 #    ifndef ElfW
@@ -101,7 +83,7 @@ bool GetSectionHeaderByName(int fd, const char* name, size_t name_len,
 
 }  // namespace google
 
-#  endif /* __ELF__ */
+#  endif /* HAVE_LINK_H */
 
 namespace google {
 

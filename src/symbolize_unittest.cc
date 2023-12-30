@@ -60,7 +60,8 @@ using namespace google;
 
 #  define always_inline
 
-#  if defined(__ELF__) || defined(GLOG_OS_WINDOWS) || defined(GLOG_OS_CYGWIN)
+#  if defined(HAVE_LINK_H) || defined(GLOG_OS_WINDOWS) || \
+      defined(GLOG_OS_CYGWIN)
 // A wrapper function for Symbolize() to make the unit test simple.
 static const char* TrySymbolize(void* pc) {
   static char symbol[4096];
@@ -72,7 +73,7 @@ static const char* TrySymbolize(void* pc) {
 }
 #  endif
 
-#  if defined(__ELF__)
+#  if defined(HAVE_LINK_H)
 
 // This unit tests make sense only with GCC.
 // Uses lots of GCC specific features.
@@ -446,7 +447,7 @@ __declspec(noinline) void TestWithReturnAddress() {
 #    endif
   cout << "Test case TestWithReturnAddress passed." << endl;
 }
-#  endif  // __ELF__
+#  endif  // HAVE_LINK_H
 #endif    // HAVE_STACKTRACE
 
 int main(int argc, char** argv) {
@@ -454,7 +455,7 @@ int main(int argc, char** argv) {
   InitGoogleLogging(argv[0]);
   InitGoogleTest(&argc, argv);
 #if defined(HAVE_SYMBOLIZE) && defined(HAVE_STACKTRACE)
-#  if defined(__ELF__)
+#  if defined(HAVE_LINK_H)
   // We don't want to get affected by the callback interface, that may be
   // used to install some callback function at InitGoogle() time.
   InstallSymbolizeCallback(nullptr);
@@ -469,7 +470,7 @@ int main(int argc, char** argv) {
 #  else   // GLOG_OS_WINDOWS
   printf("PASS (no symbolize_unittest support)\n");
   return 0;
-#  endif  // __ELF__
+#  endif  // HAVE_LINK_H
 #else
   printf("PASS (no symbolize support)\n");
   return 0;

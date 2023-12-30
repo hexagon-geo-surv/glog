@@ -125,7 +125,7 @@ using ssize_t = std::ptrdiff_t;
 #ifndef GLOG_NO_SYMBOLIZE_DETECTION
 #  ifndef HAVE_SYMBOLIZE
 // defined by gcc
-#    if defined(__ELF__) && defined(GLOG_OS_LINUX)
+#    if defined(HAVE_LINK_H) && defined(GLOG_OS_LINUX)
 #      define HAVE_SYMBOLIZE
 #    elif defined(GLOG_OS_MACOSX) && defined(HAVE_DLADDR)
 // Use dladdr to symbolize.
