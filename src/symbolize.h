@@ -63,6 +63,10 @@
 #  if defined(HAVE_LINK_H)
 #    include <link.h>  // For ElfW() macro.
 
+#ifndef SIZEOF_VOID_P
+#define SIZEOF_VOID_P __SIZEOF_POINTER__
+#endif
+
 // If there is no ElfW macro, let's define it by ourself.
 #    ifndef ElfW
 #      if SIZEOF_VOID_P == 4
