@@ -107,17 +107,13 @@ static ATTRIBUTE_NOINLINE void DemangleInplace(char* out, size_t out_size) {
 
 }  // namespace google
 
-#  if defined(__ELF__)
+#  if defined(HAVE_LINK_H)
 
 #    if defined(HAVE_DLFCN_H)
 #      include <dlfcn.h>
 #    endif
-#    if defined(GLOG_OS_OPENBSD)
-#      include <sys/exec_elf.h>
-#    else
-#      include <elf.h>
-#    endif
 #    include <fcntl.h>
+#    include <link.h>
 #    include <sys/stat.h>
 #    include <sys/types.h>
 #    include <unistd.h>

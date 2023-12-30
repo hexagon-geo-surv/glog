@@ -59,6 +59,7 @@ def glog_library(with_gflags = 1, **kwargs):
         "-Wno-unused-function",
         "-Wno-unused-local-typedefs",
         "-Wno-unused-variable",
+        "-DHAVE_ELF_H",
         # Allows src/logging.cc to determine the host name.
         "-DHAVE_SYS_UTSNAME_H",
         # For src/utilities.cc.
@@ -73,6 +74,7 @@ def glog_library(with_gflags = 1, **kwargs):
     linux_or_darwin_copts = wasm_copts + [
         "-DGLOG_EXPORT=__attribute__((visibility(\\\"default\\\")))",
         "-DGLOG_NO_EXPORT=__attribute__((visibility(\\\"default\\\")))",
+        "-DHAVE_LINK_H",
         "-DHAVE_MODE_T",
         "-DHAVE_SSIZE_T",
         "-DHAVE_SYS_TYPES_H",
@@ -87,6 +89,7 @@ def glog_library(with_gflags = 1, **kwargs):
     freebsd_only_copts = [
         # Enable declaration of _Unwind_Backtrace
         "-D_GNU_SOURCE",
+        "-DHAVE_ELF_H",
     ]
 
     linux_only_copts = [
